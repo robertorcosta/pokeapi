@@ -14,14 +14,25 @@ const fetchPokemon = () => {
             id: result.id
         })).sort((a, b) => a.ability > b.ability ? 1 : -1);
         displayPokemon(pokemon);
+        console.log(pokemon);
 
         //let obj = pokemon.find(o => o.name === 'charizard');
 
-        //console.log(obj);
+        var form = document.getElementById('formulario');
+        var campo = document.getElementById('campo');
+
+        form.addEventListener('submit', function (e) {
+            // alerta o valor do campo
+            let obj = pokemon.find(o => o.name === campo.value);
+            displayPokemon([obj])          
+            // impede o envio do form
+            e.preventDefault();
+        });   //console.log(obj);
+
     });
 
-
 };
+
 const displayPokemon = (pokemon) => {
     const pokemonHTMLString = pokemon
         .map(
@@ -38,4 +49,6 @@ const displayPokemon = (pokemon) => {
     pokedex.innerHTML = pokemonHTMLString;
 
 };
+
 fetchPokemon();
+
