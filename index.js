@@ -35,12 +35,13 @@ const fetchPokemon = () => {
                     e.preventDefault();
                 }
             }
-        }); 
+        });
 
     });
 };
 
 const displayPokemon = (pokemon) => {
+    csv_save(pokemon)
     const pokemonHTMLString = pokemon
         .map(
             (pokeman) => `
@@ -64,6 +65,42 @@ const pokemonNotFound = () => {
     </li>`;
     pokedex.innerHTML = pokemonHTMLString;
 };
+// referencia para função de CSV
+// https://www.codegrepper.com/code-examples/javascript/convert+array+to+csv+file+javascript
+var objectToCSVRow = function (dataObject) {
+    var dataArray = new Array;
+    for (var o in dataObject) {
+        var innerValue = dataObject[o] === null ? '' : dataObject[o].toString();
+        var result = innerValue.replace(/"/g, '""');
+        result = '"' + result + '"';
+        dataArray.push(result);
+    }
+    return dataArray.join(' ') + '\r\n';
+}
+
+const csv_save = (data) => {
+
+    if (!data.length) {
+        return;
+    }
+
+    var csvContent = "data:text/csv;charset=utf-8,";
+
+    // headers
+    csvContent += objectToCSVRow(Object.keys(data[0]));
+
+    data.forEach(function (item) {
+        csvContent += objectToCSVRow(item);
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "pokedex.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 fetchPokemon();
 
