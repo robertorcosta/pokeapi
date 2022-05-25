@@ -22,11 +22,15 @@ const fetchPokemon = () => {
         var campo = document.getElementById('campo');
 
         form.addEventListener('submit', function (e) {
-            // alerta o valor do campo
             let obj = pokemon.find(o => o.name === campo.value);
-            displayPokemon([obj])          
-            // impede o envio do form
-            e.preventDefault();
+                
+            if(obj != undefined){
+                displayPokemon([obj]) 
+                e.preventDefault();        
+            } else{
+                pokemonNotFound()   
+                e.preventDefault(); 
+            }
         });   //console.log(obj);
 
     });
@@ -48,6 +52,14 @@ const displayPokemon = (pokemon) => {
         .join('');
     pokedex.innerHTML = pokemonHTMLString;
 
+};
+
+const pokemonNotFound = () => {
+    const pokemonHTMLString = `
+    <li class="card">
+        Não encontrado
+    </li>`;
+    pokedex.innerHTML = pokemonHTMLString;
 };
 
 fetchPokemon();
