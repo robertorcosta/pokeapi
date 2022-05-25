@@ -22,19 +22,22 @@ const fetchPokemon = () => {
         var campo = document.getElementById('campo');
 
         form.addEventListener('submit', function (e) {
-            let obj = pokemon.find(o => o.name === campo.value);
-                
-            if(obj != undefined){
-                displayPokemon([obj]) 
-                e.preventDefault();        
-            } else{
-                pokemonNotFound()   
-                e.preventDefault(); 
+            if (campo.value === '') {
+                displayPokemon(pokemon);
+            } else {
+                let obj = pokemon.find(o => o.name === campo.value);
+
+                if (obj != undefined) {
+                    displayPokemon([obj])
+                    e.preventDefault();
+                } else {
+                    pokemonNotFound()
+                    e.preventDefault();
+                }
             }
-        });   //console.log(obj);
+        }); 
 
     });
-
 };
 
 const displayPokemon = (pokemon) => {
