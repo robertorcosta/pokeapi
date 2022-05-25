@@ -40,3 +40,7 @@ h1 {
 form {
     text-align: center;
 }
+
+li {
+    list-style-type: none;
+  }
